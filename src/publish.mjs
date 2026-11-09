@@ -48,7 +48,17 @@ export function chapters(clips, options = {}) {
 
 export function hashtags(...texts) {
   const words = texts.join(' ').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').match(/[\p{L}\p{N}]{4,}/gu) ?? [];
-  const stop = new Set(['with', 'this', 'that', 'from', 'your', 'have', 'will', 'what', 'when', 'into', 'over', 'they', 'them', 'voor', 'naar', 'deze', 'met', 'maar', 'niet', 'zijn', 'wordt', 'worden', 'onze', 'jouw', 'heeft', 'more', 'than', 'just', 'like']);
+  const stop = new Set([
+    // English function words
+    'with', 'this', 'that', 'from', 'your', 'have', 'will', 'what', 'when', 'into', 'over', 'they', 'them',
+    'about', 'after', 'again', 'also', 'because', 'been', 'before', 'better', 'could', 'does', 'each', 'even',
+    'every', 'everything', 'here', 'make', 'many', 'much', 'only', 'other', 'some', 'such', 'their', 'there',
+    'these', 'thing', 'things', 'very', 'were', 'where', 'which', 'while', 'would', 'more', 'than', 'just', 'like',
+    // Dutch function words
+    'voor', 'naar', 'deze', 'met', 'maar', 'niet', 'zijn', 'wordt', 'worden', 'onze', 'jouw', 'heeft',
+    'alles', 'also', 'beter', 'dingen', 'echt', 'enkele', 'hier', 'maken', 'nieuwe', 'omdat', 'over', 'veel',
+    'waar', 'want', 'werken', 'zelf', 'zoals'
+  ]);
   const seen = new Set();
   return words.map(w => w.toLowerCase()).filter(w => !stop.has(w) && !/^\d+$/.test(w) && !seen.has(w) && seen.add(w)).slice(0, 5);
 }
